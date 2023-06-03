@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome notepad",
+  "version": "1.0",
+  "description": "this is a quick notepad for you to be able to use as a chrome extension",
+
+  "action": {
+    "default_popup": "./html/popup.html"
+  }
+}

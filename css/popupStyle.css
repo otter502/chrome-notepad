@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* background-color: rgb(84, 84, 84); */
+    /* color: whitesmoke;
+    border-color: white; */
+    
+}
+
+/* img{
+    background-color: transparent;
+    filter: invert();
+} */
+
+:root{
+    --background-color-var: transparent;
+    --max-height-notepad: 400px; 
+    --notepad-border-radius : 15px;
+    --notepad-border-style : black solid 3px;
+}
+
+body{
+    /* min-height: 40ch; */
+    max-height: calc(600px);
+    min-width: 50ch;
+    max-width: 75ch;
+    padding: 5px;
+}
+
+h1{
+    font-size: large;
+    text-align: center;
+}
+
+/* container styling */
+
+#notePadContainer{
+    display: table;
+    justify-self: center;
+    width: 100%;
+    height: 10ch;
+    margin-bottom: 10px;
+}
+
+/* image styling */
+
+#notePadContainer #images{
+    border: var(--notepad-border-style);
+    background-color: var(--background-color-var);
+    width: 30px;
+    height: 24px;
+    display: table-cell;
+    padding: 3px;
+    vertical-align: middle;
+    border-top-left-radius: var(--notepad-border-radius);
+    border-bottom-left-radius: var(--notepad-border-radius);
+}
+
+.icon{
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    transition: content 2s, opacity 1s, transform 0.1s;
+}
+
+.icon:hover{
+    transform: scale(1.1);
+}
+
+.icon:active{
+    transform: scale(0.9);
+}
+
+/* stops the icon transitions */
+.no-animation{transition: none;}
+.no-animation:hover{transform: none;}
+.no-animation:active{transform: none;}
+
+#saveIcon{
+    background-color: transparent;
+}
+
+#saveIcon[data-loading = "true"]{
+    animation: spin 3s linear reverse infinite;
+    background-color: rgba(255, 4, 4, 0.249);
+    border-radius: 100%;
+
+}
+
+#saveIcon[data-loading = "false"]{
+    animation: none;
+}
+
+/* notepad styling */
+
+#notePadContainer #notepad{
+    width: calc(100% - 24px);
+    border: var(--notepad-border-style);
+    padding: 5px;
+    display: table-cell;
+    border-left: none;
+    border-top-right-radius: var(--notepad-border-radius);
+    border-bottom-right-radius: var(--notepad-border-radius);
+}
+
+/* textarea styling */
+
+#notepadInternal{
+    resize: vertical;
+    width: 100%;
+    min-height: 100px;
+    max-height: var(--max-height-notepad);
+    font-size: small;
+    padding: 1px;
+}
+
+#notePadTitle{
+    resize: none;
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    font-weight: bold;
+    width: 90%;
+    height: 3ch;
+    font-size: large;
+    padding: 1px;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

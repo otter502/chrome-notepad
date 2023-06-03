@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/popupStyle.css">
+    <title>PopUp</title>
+</head>
+<body>
+    
+    <div id="header"><h1>Chrome NotePad</h1></div>
+    <div id="notePadContainer">
+        <div id="images">
+            <div>
+                <img src="../images/sync_saved_locally_FILL0_wght400_GRAD0_opsz48.svg" data-loading="false" class="icon no-animation" id="saveIcon" title="saved locally!"></img>
+                <div id="sizeUp">
+                    <img src="../images/text_increase_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="font size up"></img>
+                </div>
+                <div id="lightDarkModeToggle">
+                    <img src="../images/settings_brightness_FILL0_wght400_GRAD0_opsz48.svg" class="icon" ></img>
+                </div>
+                <div id="sizeDown">
+                    <img src="../images/text_decrease_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="font size down"></img>
+                </div>
+                <div id="clipboardCopy">
+                    <img src="../images/content_copy_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="copy To Clipboard"></img>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notepad">
+            <textarea type="text" id="notePadTitle" placeholder="Title"></textarea>
+            <textarea type="text" id="notepadInternal" placeholder="Type here to start a notepad"></textarea>
+        </div>
+    </div>
+    <div id="infoBar">
+        <div id="char word count">
+            <div id="characterCount"></div>
+            <div id="wordCount"></div>
+            
+        </div>
+    </div>
+    <!-- <div id="textContainer">
+        <img src="../svg/lock_FILL0_wght400_GRAD0_opsz48.svg" id="lockIcon"></img>
+        <textarea id="text" contenteditable="true">init required</textarea>
+    </div> -->
+    <!-- <div id="buttons">
+        <button id="highlightLookAlikes">display non-ascii</button>
+    </div> -->
+    <div id="footer">
+        
+    </div>
+    <script src="../js/notepad.js"></script>
+</body>
+</html>
