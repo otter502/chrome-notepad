@@ -41,6 +41,10 @@ const params = {
         savedIcon : "../images/sync_saved_locally_FILL0_wght400_GRAD0_opsz48.svg",
         savingIcon : "../images/sync_FILL0_wght400_GRAD0_opsz48.svg"
     },
+    darkLightModeCss : {
+        dark : "--notepad-border-style : white solid 3px; --text-color : white; --text-background-color : black; --background-color : black; --img-filter : invert();",
+        light :  "--notepad-border-style : black solid 3px; --text-color : black; --text-background-color : white; --background-color : white; --img-filter : none;"
+    },
     updateIdleEditDelay : 500, //ms
     autoSaveWaitTime : 1000,
     wordCountRegex: /(\w)+/g,
@@ -48,7 +52,11 @@ const params = {
     textAreaEnabledColor : "transparent",
 }
 
-let vars = {}
+let vars = {
+    hasSaved : true,
+    darkLightCurrMode : "dark",
+    currentFontSize : 2
+}
 
 //element declarations
 const textElement = document.getElementById(params.ids.textAreaId); 
@@ -63,6 +71,20 @@ const getCurrentContent = () => {
     };
 }
 
+const getData = () => {
+    const text = getCurrentContent();
+    return {
+        settings : {
+            font_size : vars.currentFontSize,
+            darkMode : vars.darkLightCurrMode
+        },
+        text : {
+            title : text.title,
+            text : text.text
+        }
+    };
+}
+
 const loadContent = (title, text) => {
     titleElement.value = title;
     textElement.value = text;
@@ -72,17 +94,22 @@ const loadSaved = async () =>{
     let titleText = "";
     let notepadText = "";
     let data = (await params.storage.storageArea.get(params.storage.autoSaveKey))[params.storage.autoSaveKey]
+    console.log(data);
     if (data !== undefined) {
-        titleText = data.title   
-        notepadText = data.text
+        if (data.settings == undefined) {return;}
+        vars.currentFontSize = (data.settings.font_size) ? data.settings.font_size : 2;
+        vars.darkLightCurrMode = (data.settings.darkMode) ? data.settings.darkMode : "light"; 
+        titleText = data.text.title;  
+        notepadText = data.text.text;
     }
+    console.log(titleText + " : " + notepadText);
     loadContent(titleText, notepadText)
 }
 
 const saveContent = async () => {
-    let textarr = getCurrentContent();
+    let data = getData();
     params.storage.storageArea.set({
-        [params.storage.autoSaveKey] : textarr
+        [params.storage.autoSaveKey] : data
     })
 }
 
@@ -134,6 +161,7 @@ const capSelecButton = document.getElementById(params.ids.buttonIDs.capitilizeSe
 const copyToClipButton = document.getElementById(params.ids.buttonIDs.copyToClipboard);
 const largerTextButton = document.getElementById(params.ids.buttonIDs.sizeUp);
 const smallerTextButton = document.getElementById(params.ids.buttonIDs.sizeDown);
+const darkLightToggleButton = document.getElementById(params.ids.buttonIDs.darkLightModeToggle);
 
 //icon that needs style updates
 const saveIcon = document.getElementById(params.ids.saveImageId);
@@ -165,23 +193,28 @@ var fontSizeList = [
     "xx-large",
     "xxx-large"
 ];
-let currentFontSize = 2;
 
 const updateTextSize = () =>{
-    textSizeDisplay.innerText = fontSizeList[currentFontSize];
-    textElement.style.fontSize = fontSizeList[currentFontSize];    
+    let formatText = fontSizeList[vars.currentFontSize].split("-");
+    textSizeDisplay.innerText = ((formatText.length > 1) ? 
+        (formatText[0] + "-" + formatText[1].charAt(0)) : 
+        (formatText[0].charAt(0)));
+    textElement.style.fontSize = fontSizeList[vars.currentFontSize];    
 }
 
 largerTextButton.addEventListener("click", (event) => {
-    currentFontSize = clamp(currentFontSize + 1, 0, fontSizeList.length - 1);
+    vars.currentFontSize = clamp(vars.currentFontSize + 1, 0, fontSizeList.length - 1);
     updateTextSize();
 });
 
 smallerTextButton.addEventListener("click", (event) => {
-    currentFontSize = clamp(currentFontSize - 1, 0, fontSizeList.length - 1);
-    updateTextSize()
+    vars.currentFontSize = clamp(vars.currentFontSize - 1, 0, fontSizeList.length - 1);
+    updateTextSize();
 });
 
+darkLightToggleButton.addEventListener("click", (event) => {
+
+});
 
 
 //the update interval script
@@ -190,13 +223,12 @@ smallerTextButton.addEventListener("click", (event) => {
 
 //interval, if the time is > minimum, run updates
 
-let hasSaved = true; 
 let lastEditTime = 0;
 
 const updateLastEditTime = () => {
     // console.log(lastEditTime);
     lastEditTime = Date.now();
-    hasSaved = false;
+    vars.hasSaved = false;
     saveIcon.style.content = `url("${params.images.savingIcon}")` //TODO have the savecontent action unset this
     saveIcon.setAttribute("data-loading", "true");
     saveIcon.title = "saving..."
@@ -229,10 +261,10 @@ if (titleElement.addEventListener) {
 
 
 setInterval(async () => {
-    if ((Date.now() - lastEditTime > params.autoSaveWaitTime) && !hasSaved) {
+    if ((Date.now() - lastEditTime > params.autoSaveWaitTime) && !vars.hasSaved) {
         await saveContent();
         updateValues();
-        hasSaved = true;
+        vars.hasSaved = true;
         saveIcon.style.content = `url("${params.images.savedIcon}")` //TODO have the savecontent action set this
         saveIcon.setAttribute("data-loading", "false");
         saveIcon.title = "saved locally!"
@@ -248,14 +280,15 @@ window.onload = async () => {
 
 
 
+
 //TODO add some safety, like a way to limit # of downloads per minute
 
 const downloadFile = async () => {
     const a = document.getElementById(params.ids.fileSystemIds.hiddenDownloadElement);
-    const text = getCurrentContent();
-    const blob = new Blob([JSON.stringify(text)], { type: "text/json" });
+    let data = getData();
+    const blob = new Blob([JSON.stringify(data)], { type: "text/json" });
 
-    a.download = (text.title) ? text.title + ".json" : "unamedNotePad.json";
+    a.download = (data.text.title) ? data.text.title + ".json" : "unamedNotePad.json";
     a.href = window.URL.createObjectURL(blob);
     a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
@@ -278,7 +311,10 @@ function handleFiles() {
             let x = reader.result;
             console.log(x);
             let jsonValue = JSON.parse(x);
-            loadContent(jsonValue["title"],jsonValue["text"])
+            vars.currentFontSize = jsonValue["settings"]["font_size"];
+            vars.darkLightCurrMode = jsonValue["settings"]["darkMode"]
+            loadContent(jsonValue["text"]["title"],jsonValue["text"]["text"])
+            updateTextSize()
         },
         false
     );

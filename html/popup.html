@@ -9,7 +9,7 @@
 </head>
 <body>
     
-    <div id="header"><h1>Chrome NotePad</h1></div>
+    <div id="header"><h1 class="text-container">Chrome NotePad</h1></div>
     <div id="notePadContainer">
         <div id="images">
             <div>
@@ -24,15 +24,15 @@
                     <img src="../images/text_decrease_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="font size down"></img>
                 </div>
                 <div id="clipboardCopy">
-                    <div id="copy-Popup" animate="false">Copied!</div>
+                    <div id="copy-Popup" animate="false" class="text-container">Copied!</div>
                     <img src="../images/content_copy_FILL0_wght400_GRAD0_opsz48.svg" id="clipboardCopyImg" class="icon" title="copy To Clipboard"></img>
                 </div>
             </div>
         </div>
         
         <div id="notepad">
-            <textarea type="text" id="notePadTitle" placeholder="Title"></textarea>
-            <textarea type="text" id="notepadInternal" placeholder="Type here to start a notepad"></textarea>
+            <textarea type="text" id="notePadTitle" class="text-container" placeholder="Title"></textarea>
+            <textarea type="text" id="notepadInternal" class="text-container" placeholder="Type here to start a notepad"></textarea>
         </div>
     </div>
     <div id="infoBar">
@@ -45,9 +45,9 @@
             <a id="downloadingElement" class="hidden"></a>
         </div>
         <div id="counters">
-            <div id="textSize"></div>
-            <div id="charCount"></div>
-            <div id="wordCount"></div>
+            <div id="textSize" class="text-container"></div>
+            <div id="charCount" class="text-container"></div>
+            <div id="wordCount" class="text-container"></div>
         </div>
     </div>
     <!-- <div id="textContainer">
