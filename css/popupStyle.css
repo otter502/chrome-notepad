@@ -159,6 +159,7 @@ h1{
     max-height: var(--max-height-notepad);
     font-size: small;
     padding: 1px;
+    border-bottom-left-radius: 15px;
 }
 
 #notePadTitle{
@@ -172,6 +173,8 @@ h1{
     height: 3ch;
     font-size: large;
     padding: 1px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 @keyframes spin {

@@ -199,7 +199,8 @@ const updateTextSize = () =>{
     textSizeDisplay.innerText = ((formatText.length > 1) ? 
         (formatText[0] + "-" + formatText[1].charAt(0)) : 
         (formatText[0].charAt(0)));
-    textElement.style.fontSize = fontSizeList[vars.currentFontSize];    
+    textElement.style.fontSize = fontSizeList[vars.currentFontSize];
+    saveContent();
 }
 
 largerTextButton.addEventListener("click", (event) => {
@@ -213,9 +214,36 @@ smallerTextButton.addEventListener("click", (event) => {
 });
 
 darkLightToggleButton.addEventListener("click", (event) => {
-
+    if (vars.darkLightCurrMode == "dark") {
+        vars.darkLightCurrMode = "light";
+    } else if (vars.darkLightCurrMode == "light") {
+        vars.darkLightCurrMode = "dark";
+    }
+    updateDLMode()
 });
 
+
+var r = document.querySelector(':root');
+
+const dLModeParser = (text) => {
+    let keyValueArr = [[String()]];
+    String(text).split(";").forEach(t => {
+        if(t.length == 0) return;
+        let pair = t.split(":").map((x) => {return String(x.trim())})
+        keyValueArr.push(pair);
+    });
+    return keyValueArr;
+}
+const setProperties = (x) => {
+    x.forEach(pair => {
+        r.style.setProperty(pair[0], pair[1])
+    });
+}
+
+const updateDLMode = () => {   
+    setProperties(dLModeParser(params.darkLightModeCss[vars.darkLightCurrMode]));
+    saveContent();
+}
 
 //the update interval script
 
@@ -273,6 +301,7 @@ setInterval(async () => {
  
 window.onload = async () => {
     await loadSaved();
+    updateDLMode();
     updateValues();
     updateTextSize();
 }
