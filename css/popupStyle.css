@@ -62,6 +62,7 @@ h1{
     height: 24px;
     background-color: transparent;
     transition: content 2s, opacity 1s, transform 0.1s;
+    cursor: pointer;
 }
 
 .icon:hover{
@@ -73,9 +74,35 @@ h1{
 }
 
 /* stops the icon transitions */
-.no-animation{transition: none;}
-.no-animation:hover{transform: none;}
-.no-animation:active{transform: none;}
+.no-button{transition: none; cursor: default;}
+.no-button:hover{transform: none;}
+.no-button:active{transform: none;}
+
+#copy-Popup{
+    border: 3px black solid;
+    border-radius: 5px;
+    position: absolute;
+    left: 35px;
+    background-color: white;
+    opacity: 0%;
+}
+#copy-Popup[animate = "true"]{
+    animation: fadeInOut 1s linear normal 1;
+}
+#copy-Popup[animate = "false"]{
+    animation: none;
+}
+@keyframes fadeInOut {
+    from{opacity: 0%;}
+    25%{opacity: 100%;}
+    50%{opacity: 100%;}
+    75%{opacity: 100%;}
+    to{opacity: 0%;}
+}
+
+#clipboardCopyImg{
+    display: inline;
+}
 
 #saveIcon{
     background-color: transparent;
@@ -131,4 +158,61 @@ h1{
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
+}
+
+
+/* this is now for the stuff below the notepad */
+
+#infoBar{
+    display: flex;
+}
+
+#upDownLoadButtonPair{
+    display: flex;
+}
+#upDownLoadButtonPair div{
+    border: 3px black solid;
+    padding: 5px;
+    cursor: pointer;
+    transition: content 2s, opacity 1s, background-color 0.3s;
+}
+#upDownLoadButtonPair div:hover{
+    background-color: rgb(154, 154, 154);
+}
+#upDownLoadButtonPair div:active{
+    background-color: rgb(112, 112, 112);
+}
+#upDownLoadButtonPair #download{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+#upDownLoadButtonPair #upload{
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+}
+
+.hidden{
+    width: 0%;
+    visibility: hidden;
+}
+
+/* info bar */
+
+#textSize::before{content : "size:\00a0";}
+#charCount::before{content : "char:\00a0";}
+#wordCount::before{content : "word:\00a0";}
+
+#counters{
+    display: inline-flex;
+    margin: 2px;
+    border: black solid 3px;
+    border-radius: 10px;
+}
+#counters div{
+    margin: 3px;
+    padding: 1ch;
+    display: inline;
+    border: black solid 2px;
+    border-radius: 15px;
 }

@@ -13,7 +13,7 @@
     <div id="notePadContainer">
         <div id="images">
             <div>
-                <img src="../images/sync_saved_locally_FILL0_wght400_GRAD0_opsz48.svg" data-loading="false" class="icon no-animation" id="saveIcon" title="saved locally!"></img>
+                <img src="../images/sync_saved_locally_FILL0_wght400_GRAD0_opsz48.svg" data-loading="false" class="icon no-button" id="saveIcon" title="saved locally!"></img>
                 <div id="sizeUp">
                     <img src="../images/text_increase_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="font size up"></img>
                 </div>
@@ -24,7 +24,8 @@
                     <img src="../images/text_decrease_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="font size down"></img>
                 </div>
                 <div id="clipboardCopy">
-                    <img src="../images/content_copy_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="copy To Clipboard"></img>
+                    <div id="copy-Popup" animate="false">Copied!</div>
+                    <img src="../images/content_copy_FILL0_wght400_GRAD0_opsz48.svg" id="clipboardCopyImg" class="icon" title="copy To Clipboard"></img>
                 </div>
             </div>
         </div>
@@ -35,10 +36,18 @@
         </div>
     </div>
     <div id="infoBar">
-        <div id="char word count">
-            <div id="characterCount"></div>
+        <div id="upDownLoadButtonPair">
+            <div id="download"><img src="../images/download_FILL0_wght400_GRAD0_opsz48 (1).svg" class="icon" title="download notepad"></img></div>
+            <div id="upload"><img src="../images/upload_FILL0_wght400_GRAD0_opsz48.svg" class="icon" title="download notepad"></img></div>
+            <form id="uploadForm">
+                <input id="file" name="file" class="hidden" type="file" accept=".json"/></input>
+            </form>
+            <a id="downloadingElement" class="hidden"></a>
+        </div>
+        <div id="counters">
+            <div id="textSize"></div>
+            <div id="charCount"></div>
             <div id="wordCount"></div>
-            
         </div>
     </div>
     <!-- <div id="textContainer">
