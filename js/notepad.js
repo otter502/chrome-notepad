@@ -45,8 +45,8 @@ const params = {
         dark : "--notepad-border-style : white solid 3px; --text-color : white; --text-background-color : black; --background-color : black; --img-filter : invert();",
         light :  "--notepad-border-style : black solid 3px; --text-color : black; --text-background-color : white; --background-color : white; --img-filter : none;"
     },
-    updateIdleEditDelay : 500, //ms
-    autoSaveWaitTime : 1000,
+    updateIdleEditDelay : 25, //ms
+    autoSaveWaitTime : 250,
     wordCountRegex: /(\w)+/g,
     textAreaDisableColor : "#a8a8a8",
     textAreaEnabledColor : "transparent",
@@ -298,17 +298,13 @@ setInterval(async () => {
         saveIcon.title = "saved locally!"
     }
 }, params.updateIdleEditDelay)
- 
+
 window.onload = async () => {
     await loadSaved();
-    updateDLMode();
+    // updateDLMode();
     updateValues();
     updateTextSize();
 }
-
-
-
-
 
 //TODO add some safety, like a way to limit # of downloads per minute
 

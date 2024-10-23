@@ -25,6 +25,24 @@
     --background-color : black;
     --img-filter : invert(); */
 }
+@media (prefers-color-scheme: light) {
+    :root{
+        --notepad-border-style : black solid 3px;
+        --text-color : black;
+        --text-background-color : white;
+        --background-color : white;
+        --img-filter : none
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root{
+        --notepad-border-style : white solid 3px;
+        --text-color : white;
+        --text-background-color : black;
+        --background-color : black;
+        --img-filter : invert();
+    }
+}
 
 .text-container{
     background-color: var(--text-background-color);    
@@ -158,7 +176,7 @@ h1{
     min-height: 100px;
     max-height: var(--max-height-notepad);
     font-size: small;
-    padding: 1px;
+    padding: 15px;
     border-bottom-left-radius: 15px;
 }
 
